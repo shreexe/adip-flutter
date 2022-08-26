@@ -1,7 +1,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:adip/Screens/home.dart';
+import 'package:adip/Screens/Login/home.dart';
 import 'package:adip/components/background.dart';
 // ignore_for_file: prefer_const_constructors
 import '../../../components/already_have_an_account_acheck.dart';

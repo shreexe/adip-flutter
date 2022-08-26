@@ -1,18 +1,21 @@
+
+import 'package:adip/Screens/Signup/components/hhomee.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:adip/Screens/Login/components/login_form.dart';
-import 'package:adip/Screens/home.dart';
+import 'package:adip/Screens/Login/home.dart';
 // ignore_for_file: prefer_const_constructors
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Login/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-String _userEmail = '';
-String _password = '';
+String emailId = '';
+String password = '';
 
 final _formKey = GlobalKey<FormState>();
 
 class SignUpForm extends StatelessWidget {
+
   const SignUpForm({
     Key? key,
   }) : super(key: key);
@@ -23,6 +26,7 @@ class SignUpForm extends StatelessWidget {
   }
 }
 class HomePage1 extends StatefulWidget{
+
   const HomePage1 ({Key? key}) : super(key:key);
   @override
   _HomePageState createState() => _HomePageState();
@@ -31,10 +35,10 @@ class HomePage1 extends StatefulWidget{
 
 
 class _HomePageState extends State<HomePage1>{
-  Future<FirebaseApp> _initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-    return firebaseApp;
-  }
+  // Future<FirebaseApp> _initializeFirebase() async {
+  //   FirebaseApp firebaseApp = await Firebase.initializeApp();
+  //   return firebaseApp;
+  // }
   @override
   Widget build(BuildContext context){
     return Form(
@@ -59,7 +63,7 @@ class _HomePageState extends State<HomePage1>{
               }
               return null;
             },
-            onChanged: (value) => _userEmail = value,
+            onChanged: (value) => emailId = value,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
@@ -80,7 +84,7 @@ class _HomePageState extends State<HomePage1>{
                 }
                 return null;
               },
-              onChanged: (value) => _password = value,
+              onChanged: (value) => password = value,
 
             ),
           ),
@@ -117,19 +121,71 @@ class _HomePageState extends State<HomePage1>{
     final bool? isValid = _formKey.currentState?.validate();
     print(_formKey.currentState?.validate());
     if (isValid == true) {
-      debugPrint('Everything looks good!');
-      debugPrint(_userEmail);
-     // Navigator.push(
-      //  context,
-      //  MaterialPageRoute(builder: (context) => const HomeScreen()),
-     // );
-      /*
-      Continute proccessing the provided information with your own logic
-      such us sending HTTP requests, savaing to SQLite database, etc.
-      */
+      aunthenticateUser();
     }
     else{
       debugPrint('Everything looks bad!');
     }
+  }
+  aunthenticateUser() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    print("jasviram init");
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      print("jasviram try");
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: emailId,
+        password: password,
+      );
+      user = userCredential.user;
+      print('Jasviram ${userCredential}');
+      if(userCredential.additionalUserInfo?.isNewUser == false){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  lol()),
+        );
+      }
+
+    }  catch (e) {
+      showAlertDialog(context);
+      if (e == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e == 'wrong-password') {
+        print('Wrong password provided.');
+      }
+      else{
+        print('aaaaaa$e');
+      }
+    }
+    // return user;
+    // }
+  }
+  showAlertDialog(BuildContext context) {
+
+    // set up the button
+    Widget okButton = TextButton(
+        child: Text("OK"),
+        onPressed: () { Navigator.pop(context);}
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Invalid login"),
+      content: Text("Try again"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

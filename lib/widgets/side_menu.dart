@@ -1,5 +1,6 @@
 import 'package:adip/Screens/Welcome/welcome_screen.dart';
-import 'package:adip/Screens/details.dart';
+import 'package:adip/Screens/Login/details.dart';
+import 'package:adip/widgets/call.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: prefer_const_constructors
@@ -28,9 +29,22 @@ class NavDrawer extends StatelessWidget {
              child:  ListTile(
              leading: Icon(Icons.exit_to_app),
              title: Text('Logout'),
+
              
          
           ),
+            ),
+          ),
+          Card(
+            child: InkWell(
+              splashColor: Colors.orange,
+              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => Call()),)},
+
+              
+             child:  ListTile(
+             leading: Icon(Icons.exit_to_app),
+             title: Text('Call'),
+             ),
             ),
           ),
         ],

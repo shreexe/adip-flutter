@@ -1,3 +1,4 @@
+import 'package:adip/Screens/Login/myprofile.dart';
 import 'package:adip/components/session.dart';
 import 'package:adip/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return const DetailsScreen();
+                                return App();
                               }),
                             );
                             },
@@ -102,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         CategoryCard(
                           title: "Track My Complaint",
-                          svgSrc: "assets/icons/feedback.svg",
+                          svgSrc: "assets/icons/complaint.svg",
                           press: () {
                             
                           },

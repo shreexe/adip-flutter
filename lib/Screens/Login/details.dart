@@ -1,10 +1,10 @@
-import 'package:adip/Screens/myprofile.dart';
+import 'package:adip/Screens/Login/myprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../components/session.dart';
-import '../constants.dart';
-import 'Welcome/welcome_screen.dart';
-import '';
+import '../../components/session.dart';
+import '../../constants.dart';
+import '../Welcome/welcome_screen.dart';
+
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
